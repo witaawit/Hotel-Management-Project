@@ -1,14 +1,17 @@
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 class HotelManager {
     private Holder hotelData;
     private Scanner scanner;
+    private List<CleaningService> cleaningRequests;
 
     public HotelManager(Holder hotelData, Scanner scanner) {
         this.hotelData = hotelData;
         this.scanner = scanner;
+        this.cleaningRequests = new ArrayList<>();
     }
 
     public Holder getHotelData() {
@@ -43,16 +46,16 @@ class HotelManager {
 
         switch (roomCategory) {
             case 1:
-                hotelData.luxury_doublerrom[roomArrayIndex] = new Doubleroom(name, contact, gender, name2, contact2, gender2);
+                hotelData.luxury_doublerrom[roomArrayIndex] = new Doubleroom(name, contact, gender, false, name2, contact2, gender2);
                 break;
             case 2:
-                hotelData.deluxe_doublerrom[roomArrayIndex] = new Doubleroom(name, contact, gender, name2, contact2, gender2);
+                hotelData.deluxe_doublerrom[roomArrayIndex] = new Doubleroom(name, contact, gender, false, name2, contact2, gender2);
                 break;
             case 3:
-                hotelData.luxury_singleerrom[roomArrayIndex] = new Singleroom(name, contact, gender);
+                hotelData.luxury_singleerrom[roomArrayIndex] = new Singleroom(name, contact, gender, false);
                 break;
             case 4:
-                hotelData.deluxe_singleerrom[roomArrayIndex] = new Singleroom(name, contact, gender);
+                hotelData.deluxe_singleerrom[roomArrayIndex] = new Singleroom(name, contact, gender, false);
                 break;
             default:
                 System.out.println("Error: Invalid room category in customer details.");
@@ -322,5 +325,29 @@ class HotelManager {
             System.out.println("An unexpected error occurred during food order: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public void requestCleaning(int roomNumber, String requestedBy) {
+        // prevent duplicate cleaning requests for the same room
+        for (CleaningService cs : cleaningRequests) {
+            if (cs.getRoomNumber() == roomNumber && !cs.isCompleted()) {
+                System.out.println("Cleaning already requested for Room " + roomNumber);
+                return;
+            }
+        }
+
+        CleaningService newRequest = new CleaningService(roomNumber, requestedBy);
+        cleaningRequests.add(newRequest);
+        System.out.println("Cleaning request registered for Room " + roomNumber);
+    }
+
+    public void confirmCleaningDone(int roomNumber) {
+        for (CleaningService cs : cleaningRequests) {
+            if (cs.getRoomNumber() == roomNumber && !cs.isCompleted()) {
+                System.out.println(cs.toString());
+                return;
+            }
+        }
+        System.out.println("No pending cleaning request for Room " + roomNumber);
     }
 }
