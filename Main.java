@@ -15,7 +15,7 @@ public class Main {
             System.out.println("\n======== Hotel Menu ========");
             System.out.println("1. Display Room Features");
             System.out.println("2. Display Room Availability");
-            System.out.println("3. Book Room");
+            System.out.println("3. Book Rooms");
             System.out.println("4. Order Foods");
             System.out.println("5. Checkout");
             System.out.println("6. Exit");
