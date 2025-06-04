@@ -102,9 +102,9 @@ public class Main {
                             } else {
                                 System.out.println("Room number out of range (1-60).");
                             }
-
+                            
                         } else {
-                            System.out.println("Invalid room.");
+                            System.out.println("Invalid room number.");
                             sc.nextLine();
                         }
                         break;
