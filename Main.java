@@ -18,7 +18,9 @@ public class Main {
             System.out.println("3. Book Rooms");
             System.out.println("4. Order Foods");
             System.out.println("5. Checkout");
-            System.out.println("6. Exit");
+            System.out.println("6. Request Cleaning");
+            System.out.println("7. Confirm Cleaning Done");
+            System.out.println("8. Exit");
             System.out.print("Enter your choice (1-6): ");
 
             try {
@@ -88,7 +90,42 @@ public class Main {
                         } else { System.out.println("Invalid room number."); sc.nextLine(); }
                         break;
 
-                    case 6: // Exit
+                    case 6:
+                        System.out.println("\n--- Request Cleaning ---");
+                        System.out.print("Enter Room Number (1-60): ");
+                        if (sc.hasNextInt()) {
+                            int roomNum = sc.nextInt(); sc.nextLine();
+                            if (roomNum >= 1 && roomNum <= 60) {
+                                System.out.print("Requested by: ");
+                                String requestedBy = sc.nextLine();
+                                hotelManager.requestCleaning(roomNum, requestedBy);
+                            } else {
+                                System.out.println("Room number out of range (1-60).");
+                            }
+                        } else {
+                            System.out.println("Invalid room number.");
+                            sc.nextLine();
+                        }
+                        break;
+
+                    case 7:
+                        System.out.println("\n--- Confirm Cleaning Done ---");
+                        System.out.print("Enter Room Number (1-60): ");
+                        if (sc.hasNextInt()) {
+                            int roomNum = sc.nextInt();
+                            sc.nextLine();
+                            if (roomNum >= 1 && roomNum <= 60) {
+                                hotelManager.confirmCleaningDone(roomNum);
+                            } else {
+                                System.out.println("Room number out of range (1-60).");
+                            }
+                        } else {
+                            System.out.println("Invalid room number.");
+                            sc.nextLine();
+                        }
+                        break;
+
+                    case 8: // Exit
                         System.out.println("Exiting program...");
                         break mainLoop;
 
@@ -103,14 +140,14 @@ public class Main {
                 e.printStackTrace(); // Helpful for debugging
             }
 
-            if (choice != 6) { // Don't ask to continue if exiting
+            if (choice != 8) { // Don't ask to continue if exiting
                 System.out.print("\nDo you want to perform another action? (y/n): ");
                 String wishInput = sc.next().toLowerCase();
                 continueWish = wishInput.isEmpty() ? 'n' : wishInput.charAt(0);
                 sc.nextLine(); // Consume newline
             }
 
-        } while (continueWish == 'y' && choice !=6 );
+        } while (continueWish == 'y' && choice !=8 );
 
         // Save data on exit
         System.out.println("Saving data before closing...");

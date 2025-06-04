@@ -7,19 +7,22 @@ class Singleroom implements Serializable {
     String contact;
     String gender;
     ArrayList<Food> food; // Made package-private or use methods
+    private boolean needsCleaning;
 
     Singleroom() {
         this.name = "";
         this.contact = "";
         this.gender = "";
         this.food = new ArrayList<>();
+        this.needsCleaning = false;
     }
 
-    Singleroom(String name, String contact, String gender) {
+    Singleroom(String name, String contact, String gender, boolean needsCleaning) {
         this.name = name;
         this.contact = contact;
         this.gender = gender;
         this.food = new ArrayList<>();
+        this.needsCleaning = needsCleaning;
     }
 
     public String getName() {
@@ -39,5 +42,13 @@ class Singleroom implements Serializable {
             this.food = new ArrayList<>();
         }
         this.food.add(newFood);
+    }
+
+    public boolean isNeedsCleaning() {
+        return needsCleaning;
+    }
+
+    public void setNeedsCleaning(boolean needsCleaning) {
+        this.needsCleaning = needsCleaning;
     }
 }
